@@ -27,4 +27,20 @@ describe('subscriptions', () => {
       done();
     });
   });
+  it('should update', done => {
+    nock('https://api.intercom.io').post('/subscriptions/bar', { id: 'bar', baz: 'bong' }).reply(200, {});
+    const client = new Client('foo', 'bar').usePromises();
+    client.webhook.update({ id: 'bar', baz: 'bong' }).then(r => {
+      assert.equal(200, r.status);
+      done();
+    });
+  });
+  // it('should delete', done => {
+  //   nock('https://api.intercom.io').delete('/subscriptions/bar', { id: 'bar' }).reply(200, {});
+  //   const client = new Client('foo', 'bar').usePromises();
+  //   client.webhook.delete({ id: 'bar'}).then(r => {
+  //     assert.equal(200, r.status);
+  //     done();
+  //   });
+  // });
 });
